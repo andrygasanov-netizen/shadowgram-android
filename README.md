@@ -20,7 +20,6 @@
 - [Установка](#установка)
 - [Возможности](#возможности)
 - [Подключение и прокси](#подключение-и-прокси)
-- [Версии](#версии)
 - [Частые вопросы](#частые-вопросы)
 - [Сборка](#сборка)
 - [Лицензия и благодарности](#лицензия-и-благодарности)
@@ -95,18 +94,6 @@ APK собран для 64-битных ARM-процессоров, то ест�
 
 Сообщения шифруются до серверов Telegram, поэтому владелец прокси не может их прочитать, но видит ваш IP-адрес.
 
-## Версии
-
-Версия Shadowgram = **версия Telegram + номер нашего релиза**:
-
-| Версия | Что значит |
-|---|---|
-| `13.2.2.1` | Первый релиз Shadowgram на Telegram 13.2.2 |
-| `13.2.2.1a`, `13.2.2.1b` | Небольшие обновления: иконка, одна настройка, исправление |
-| `13.2.2.2` | Следующий большой релиз на той же версии Telegram |
-
-К каждому релизу есть короткий список изменений на русском и английском. Старые релизы не удаляются.
-
 ## Частые вопросы
 
 **Это безопасно? Мои сообщения куда-то уходят?**
@@ -172,10 +159,6 @@ Everything is in **Settings → Shadowgram Tools**. Open **Essentials** and tap 
 - **Interface:** hide stories, seconds in message time, no deletion effect, no pull to next channel or topic.
 - **Media:** turn off auto-download, outgoing photo quality, large photos, rear camera for video messages.
 - **Connection:** auto proxy (on by default) finds and turns on the fastest public MTProxy when Telegram can't connect; experimental packet splitting.
-
-## Versions
-
-A Shadowgram version is **the Telegram version plus our release number**: `13.2.2.1` is the first release on Telegram 13.2.2, `13.2.2.1a` is a small update, `13.2.2.2` is the next bigger release. Every release has notes in Russian and English; old releases are kept.
 
 ## Build
 
