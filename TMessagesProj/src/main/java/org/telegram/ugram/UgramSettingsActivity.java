@@ -60,6 +60,7 @@ public class UgramSettingsActivity extends UniversalFragment {
     private static final int ID_AUTO_PROXY = 42;
     private static final int ID_FIND_PROXY = 43;
     private static final int ID_PROXY_OFF = 44;
+    private static final int ID_PROXY_LIST = 45;
     private static final int ID_EXTRA_BASE = 100;
 
     /** Plain on/off settings ported from the iOS app, by list id. */
@@ -310,6 +311,7 @@ public class UgramSettingsActivity extends UniversalFragment {
         if (UgramDpi.proxyOn()) {
             items.add(UItem.asButton(ID_PROXY_OFF, t("Отключить прокси", "Turn off proxy")));
         }
+        items.add(UItem.asButton(ID_PROXY_LIST, t("Все прокси и добавить свой", "All proxies and add your own")));
         items.add(UItem.asShadow(t("Сообщения шифруются до серверов Telegram, владелец прокси их не видит, но видит ваш IP-адрес. Список прокси берётся из открытых каталогов на GitHub.",
                 "Messages are encrypted all the way to Telegram, so the proxy owner can't read them, but sees your IP address. The proxy list comes from public catalogs on GitHub.")));
     }
@@ -348,6 +350,9 @@ public class UgramSettingsActivity extends UniversalFragment {
             case ID_PROXY_OFF:
                 UgramDpi.disableProxy();
                 break;
+            case ID_PROXY_LIST:
+                presentFragment(new org.telegram.ui.ProxyListActivity());
+                return;
             case ID_FIND_PROXY: {
                 AlertDialog progress = new AlertDialog(getContext(), AlertDialog.ALERT_TYPE_SPINNER);
                 progress.setCanCancel(false);
