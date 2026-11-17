@@ -298,12 +298,12 @@ public class UgramSettingsActivity extends UniversalFragment {
 
     private void fillNetwork(ArrayList<UItem> items) {
         items.add(UItem.asHeader(t("Без VPN", "Without a VPN")));
-        items.add(UItem.asCheck(ID_DPI_SPLIT, t("Дробление пакетов", "Split packets")).setChecked(UgramConfig.get(UgramDpi.SPLIT)));
-        items.add(UItem.asShadow(t("Первый пакет каждого соединения уходит несколькими кусками, как в zapret. Помогает, когда провайдер узнаёт Telegram по содержимому трафика. Если Telegram заблокирован по адресам серверов, нужен прокси ниже.",
-                "The first packet of every connection is sent in several pieces, like zapret does. Helps when the provider recognises Telegram by its traffic. If Telegram servers are blocked by address, use a proxy below.")));
+        items.add(UItem.asCheck(ID_DPI_SPLIT, t("Дробление пакетов (эксперимент)", "Split packets (experimental)")).setChecked(UgramConfig.get(UgramDpi.SPLIT)));
+        items.add(UItem.asShadow(t("Экспериментально. Первый пакет каждого соединения уходит кусками, как в zapret. Помогает, только если провайдер узнаёт Telegram по содержимому трафика. Если серверы Telegram закрыты по адресам (так у большинства в России), поможет только прокси ниже.",
+                "Experimental. The first packet of every connection is sent in pieces, like zapret does. Helps only when the provider recognises Telegram by its traffic. If Telegram servers are blocked by address (most providers in Russia), only a proxy below helps.")));
         items.add(UItem.asCheck(ID_AUTO_PROXY, t("Автопрокси при блокировке", "Auto proxy when blocked")).setChecked(UgramConfig.get(UgramDpi.AUTO_PROXY)));
-        items.add(UItem.asShadow(t("Если Shadowgram не может подключиться 20 секунд, он сам найдёт рабочий публичный MTProxy, проверит скорость и включит самый быстрый. Ваши собственные прокси не заменяются.",
-                "If Shadowgram can't connect for 20 seconds, it finds a working public MTProxy, checks its speed and turns on the fastest. Proxies you added yourself are never replaced.")));
+        items.add(UItem.asShadow(t("Включено сразу после установки. Если Shadowgram не может подключиться 20 секунд, он сам найдёт рабочий публичный MTProxy, проверит скорость и включит самый быстрый. Ваши собственные прокси не заменяются.",
+                "On from the start. If Shadowgram can't connect for 20 seconds, it finds a working public MTProxy, checks its speed and turns on the fastest. Proxies you added yourself are never replaced.")));
 
         items.add(UItem.asHeader(t("Прокси", "Proxy")));
         items.add(UItem.asButton(ID_FIND_PROXY, t("Найти рабочий прокси", "Find a working proxy"), UgramDpi.currentProxyName()));

@@ -54,7 +54,7 @@ public final class UgramConfig {
     }
 
     public static boolean get(String key) {
-        boolean def = SAVE_DELETED.equals(key) || MARK_DELETED.equals(key) || KEEP_SELF_DESTRUCT.equals(key) || UgramEditHistory.ENABLED.equals(key) || UgramExtras.defaultOn(key);
+        boolean def = SAVE_DELETED.equals(key) || MARK_DELETED.equals(key) || KEEP_SELF_DESTRUCT.equals(key) || UgramEditHistory.ENABLED.equals(key) || UgramExtras.defaultOn(key) || UgramDpi.AUTO_PROXY.equals(key);
         return prefs().getBoolean(key, def);
     }
 
