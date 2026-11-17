@@ -26,6 +26,7 @@ public class UgramSettingsActivity extends UniversalFragment {
     public static final int PAGE_MESSAGES = 4;
     public static final int PAGE_MEDIA = 5;
     public static final int PAGE_INTERFACE = 6;
+    public static final int PAGE_NETWORK = 7;
 
     private static final int ID_GHOST = 1;
     private static final int ID_NO_READ = 2;
@@ -54,6 +55,11 @@ public class UgramSettingsActivity extends UniversalFragment {
     private static final int ID_OPEN_MEDIA = 34;
     private static final int ID_OPEN_INTERFACE = 35;
     private static final int ID_PHOTO_QUALITY = 40;
+    private static final int ID_OPEN_NETWORK = 36;
+    private static final int ID_DPI_SPLIT = 41;
+    private static final int ID_AUTO_PROXY = 42;
+    private static final int ID_FIND_PROXY = 43;
+    private static final int ID_PROXY_OFF = 44;
     private static final int ID_EXTRA_BASE = 100;
 
     /** Plain on/off settings ported from the iOS app, by list id. */
@@ -113,6 +119,8 @@ public class UgramSettingsActivity extends UniversalFragment {
                 return t("Медиа и загрузки", "Media & downloads");
             case PAGE_INTERFACE:
                 return t("Интерфейс", "Interface");
+            case PAGE_NETWORK:
+                return t("Обход блокировок", "Bypass blocks");
             default:
                 return "Shadowgram Tools";
         }
@@ -139,6 +147,9 @@ public class UgramSettingsActivity extends UniversalFragment {
             case PAGE_INTERFACE:
                 fillInterface(items);
                 break;
+            case PAGE_NETWORK:
+                fillNetwork(items);
+                break;
             default:
                 fillHub(items);
                 break;
@@ -164,6 +175,7 @@ public class UgramSettingsActivity extends UniversalFragment {
         items.add(UItem.asButton(ID_OPEN_INTERFACE, R.drawable.msg_theme, t("Интерфейс", "Interface")));
         items.add(UItem.asButton(ID_OPEN_MESSAGES, R.drawable.msg_edit, t("Сообщения", "Messages")));
         items.add(UItem.asButton(ID_OPEN_MEDIA, R.drawable.msg_photos, t("Медиа и загрузки", "Media & downloads")));
+        items.add(UItem.asButton(ID_OPEN_NETWORK, R.drawable.msg2_policy, t("Обход блокировок", "Bypass blocks")));
         items.add(UItem.asShadow(t("Чаты — удалённые сообщения, история правок, список чатов, ваши группы и каналы. Сообщения — стиль, постфикс, эффекты. Интерфейс — истории, время, эффекты. Медиа — автозагрузка, качество фото, кружки.",
                 "Chats — deleted messages, edit history, chat list, profiles, message menu. Interface — stories, time, effects. Messages — style, postfix, effects. Media — auto-download, photo quality, video messages.")));
     }
@@ -284,6 +296,24 @@ public class UgramSettingsActivity extends UniversalFragment {
                 "The deletion effect turns a message into dust. Pull to next channel or topic is pulling up at the end of the feed.")));
     }
 
+    private void fillNetwork(ArrayList<UItem> items) {
+        items.add(UItem.asHeader(t("Без VPN", "Without a VPN")));
+        items.add(UItem.asCheck(ID_DPI_SPLIT, t("Дробление пакетов", "Split packets")).setChecked(UgramConfig.get(UgramDpi.SPLIT)));
+        items.add(UItem.asShadow(t("Первый пакет каждого соединения уходит несколькими кусками, как в zapret. Помогает, когда провайдер узнаёт Telegram по содержимому трафика. Если Telegram заблокирован по адресам серверов, нужен прокси ниже.",
+                "The first packet of every connection is sent in several pieces, like zapret does. Helps when the provider recognises Telegram by its traffic. If Telegram servers are blocked by address, use a proxy below.")));
+        items.add(UItem.asCheck(ID_AUTO_PROXY, t("Автопрокси при блокировке", "Auto proxy when blocked")).setChecked(UgramConfig.get(UgramDpi.AUTO_PROXY)));
+        items.add(UItem.asShadow(t("Если Shadowgram не может подключиться 20 секунд, он сам найдёт рабочий публичный MTProxy, проверит скорость и включит самый быстрый. Ваши собственные прокси не заменяются.",
+                "If Shadowgram can't connect for 20 seconds, it finds a working public MTProxy, checks its speed and turns on the fastest. Proxies you added yourself are never replaced.")));
+
+        items.add(UItem.asHeader(t("Прокси", "Proxy")));
+        items.add(UItem.asButton(ID_FIND_PROXY, t("Найти рабочий прокси", "Find a working proxy"), UgramDpi.currentProxyName()));
+        if (UgramDpi.proxyOn()) {
+            items.add(UItem.asButton(ID_PROXY_OFF, t("Отключить прокси", "Turn off proxy")));
+        }
+        items.add(UItem.asShadow(t("Сообщения шифруются до серверов Telegram, владелец прокси их не видит, но видит ваш IP-адрес. Список прокси берётся из открытых каталогов на GitHub.",
+                "Messages are encrypted all the way to Telegram, so the proxy owner can't read them, but sees your IP address. The proxy list comes from public catalogs on GitHub.")));
+    }
+
     @Override
     protected void onClick(UItem item, View view, int position, float x, float y) {
         switch (item.id) {
@@ -305,6 +335,40 @@ public class UgramSettingsActivity extends UniversalFragment {
             case ID_OPEN_INTERFACE:
                 presentFragment(new UgramSettingsActivity(PAGE_INTERFACE));
                 return;
+            case ID_OPEN_NETWORK:
+                presentFragment(new UgramSettingsActivity(PAGE_NETWORK));
+                return;
+            case ID_DPI_SPLIT:
+                toggle(UgramDpi.SPLIT);
+                UgramDpi.applySplit();
+                break;
+            case ID_AUTO_PROXY:
+                toggle(UgramDpi.AUTO_PROXY);
+                break;
+            case ID_PROXY_OFF:
+                UgramDpi.disableProxy();
+                break;
+            case ID_FIND_PROXY: {
+                AlertDialog progress = new AlertDialog(getContext(), AlertDialog.ALERT_TYPE_SPINNER);
+                progress.setCanCancel(false);
+                progress.show();
+                UgramDpi.findAndEnable(currentAccount, (success, message) -> {
+                    try {
+                        progress.dismiss();
+                    } catch (Exception ignore) {
+                    }
+                    if (getParentActivity() == null) {
+                        return;
+                    }
+                    if (success) {
+                        BulletinFactory.of(this).createSimpleBulletin(R.raw.contact_check, message).show();
+                    } else {
+                        BulletinFactory.of(this).createErrorBulletin(message).show();
+                    }
+                    refresh();
+                });
+                return;
+            }
             case ID_PHOTO_QUALITY: {
                 CharSequence[] names = new CharSequence[UgramExtras.QUALITIES.length];
                 for (int i = 0; i < names.length; i++) {

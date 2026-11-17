@@ -282,6 +282,10 @@ void setNetworkAvailable(JNIEnv *env, jclass c, jint instanceNum, jboolean value
     ConnectionsManager::getInstance(instanceNum).setNetworkAvailable(value, networkType, slow);
 }
 
+void setDpiSplitMode(JNIEnv *env, jclass c, jint mode) {
+    ConnectionSocket::dpiSplitMode = mode;
+}
+
 void setPushConnectionEnabled(JNIEnv *env, jclass c, jint instanceNum, jboolean value) {
     ConnectionsManager::getInstance(instanceNum).setPushConnectionEnabled(value);
 }
@@ -548,6 +552,7 @@ static JNINativeMethod ConnectionsManagerMethods[] = {
         {"native_setIpStrategy", "(IB)V", (void *) setIpStrategy},
         {"native_setNetworkAvailable", "(IZIZ)V", (void *) setNetworkAvailable},
         {"native_setPushConnectionEnabled", "(IZ)V", (void *) setPushConnectionEnabled},
+        {"native_setDpiSplitMode", "(I)V", (void *) setDpiSplitMode},
         {"native_setJava", "(Z)V", (void *) setJava},
         {"native_applyDnsConfig", "(IJLjava/lang/String;I)V", (void *) applyDnsConfig},
         {"native_checkProxy", "(ILjava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/telegram/tgnet/RequestTimeDelegate;)J", (void *) checkProxy},

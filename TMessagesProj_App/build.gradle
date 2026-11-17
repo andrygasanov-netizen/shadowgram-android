@@ -131,7 +131,7 @@ android {
         }
         afat {
             ndk {
-                abiFilters "arm64-v8a" // Ugram: 64-bit ARM only
+                abiFilters(*((project.findProperty("ugramAbis") ?: "arm64-v8a").toString().split(","))) // Ugram: 64-bit ARM only; -PugramAbis=x86_64 for the emulator
             }
             sourceSets.debug {
                 manifest.srcFile '../TMessagesProj/config/debug/AndroidManifest_SDK23.xml'

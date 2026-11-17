@@ -257,6 +257,46 @@ int32_t ConnectionSocket::checkSocketError(int32_t *error) {
     return (ret || code) != 0;
 }
 
+volatile int32_t ConnectionSocket::dpiSplitMode = 0;
+
+// Shadowgram: sends the first bytes of a connection as several small TCP segments, so DPI that
+// looks for a signature in the first packet only sees fragments. TCP_NODELAY is already on, so
+// each send() leaves as its own segment. Returns the number of bytes sent, or -1.
+ssize_t ConnectionSocket::sendSplit(uint8_t *data, size_t size, const std::string *marker) {
+    if (dpiSplitMode == 0 || size < 8) {
+        return send(socketFd, data, size, 0);
+    }
+    size_t cuts[3];
+    int count = 0;
+    cuts[count++] = 1;
+    size_t second = size / 2;
+    if (marker != nullptr && !marker->empty()) {
+        void *found = memmem(data, size, marker->data(), marker->size());
+        if (found != nullptr) {
+            second = (size_t) ((uint8_t *) found - data) + marker->size() / 2;
+        }
+    } else if (size > 64) {
+        second = 32;
+    }
+    if (second > 1 && second < size) {
+        cuts[count++] = second;
+    }
+    cuts[count++] = size;
+    size_t offset = 0;
+    for (int i = 0; i < count; i++) {
+        size_t length = cuts[i] - offset;
+        ssize_t sent = send(socketFd, data + offset, length, 0);
+        if (sent < 0) {
+            return offset > 0 ? (ssize_t) offset : -1;
+        }
+        offset += (size_t) sent;
+        if ((size_t) sent < length) {
+            break;
+        }
+    }
+    return (ssize_t) offset;
+}
+
 void ConnectionSocket::closeSocket(int32_t reason, int32_t error) {
     lastEventTime = ConnectionsManager::getInstance(instanceNum).getCurrentTimeMonotonicMillis();
     ConnectionsManager::getInstance(instanceNum).detachConnection(this);
@@ -272,6 +312,7 @@ void ConnectionSocket::closeSocket(int32_t reason, int32_t error) {
     proxyAuthState = 0;
     tlsState = 0;
     onConnectedSent = false;
+    firstPayloadSent = false;
     outgoingByteStream->clean();
     if (tlsBuffer != nullptr) {
         tlsBuffer->reuse();
@@ -526,7 +567,7 @@ void ConnectionSocket::onEvent(uint32_t events) {
                         memcpy(tempBuffer->bytes + 11, tempBuffer->bytes + 64 * 1024, 32);
                         bytesRead = 0;
 
-                        if (send(socketFd, tempBuffer->bytes, size, 0) < 0) {
+                        if (sendSplit(tempBuffer->bytes, size, &currentSecretDomain) < (ssize_t) size) {
                             if (LOGS_ENABLED) DEBUG_E("connection(%p) send failed", this);
                             closeSocket(1, -1);
                             return;
@@ -636,7 +677,7 @@ void ConnectionSocket::onEvent(uint32_t events) {
                             adjustWriteOp();
                         }
                     } else {
-                        if ((sentLength = send(socketFd, buffer->bytes(), remaining, 0)) < 0) {
+                        if ((sentLength = (!firstPayloadSent ? (firstPayloadSent = true, sendSplit(buffer->bytes(), remaining, nullptr)) : send(socketFd, buffer->bytes(), remaining, 0))) < 0) {
                             if (LOGS_ENABLED) DEBUG_D("connection(%p) send failed", this);
                             closeSocket(1, -1);
                             return;

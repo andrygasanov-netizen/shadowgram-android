@@ -1471,7 +1471,7 @@ public class LocaleController {
 
     private String getStringInternal(String key, String fallback, int res) {
         // Ugram: the app's own name, whatever the cloud language pack says
-        if (res == R.string.AppName || "AppName".equals(key)) {
+        if (res == R.string.AppName || "AppName".equals(key) || res == R.string.Page1Title || "Page1Title".equals(key)) {
             return "Shadowgram";
         }
         final String value = getStringV2(key, res, fallback);

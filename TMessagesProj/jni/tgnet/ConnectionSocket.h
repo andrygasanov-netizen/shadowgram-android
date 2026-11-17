@@ -34,6 +34,8 @@ public:
     void dropConnection();
     void setOverrideProxy(std::string address, uint16_t port, std::string username, std::string password, std::string secret);
     void onHostNameResolved(std::string host, std::string ip, bool ipv6);
+    // Shadowgram: 0 = off, 1 = split the first packet of each connection (like zapret's split)
+    static volatile int32_t dpiSplitMode;
 
 protected:
     int32_t instanceNum;
@@ -60,6 +62,8 @@ private:
     int socketFd = -1;
     time_t timeout = 12;
     bool onConnectedSent = false;
+    bool firstPayloadSent = false;
+    ssize_t sendSplit(uint8_t *data, size_t size, const std::string *marker);
     int64_t lastEventTime = 0;
     EventObject *eventObject;
     int32_t currentNetworkType;
