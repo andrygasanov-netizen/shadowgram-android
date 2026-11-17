@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ugram: green gradient behind the launcher glyph -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:startColor="#4DF2A6"
+        android:endColor="#05736B"
+        android:type="linear" />
+</shape>

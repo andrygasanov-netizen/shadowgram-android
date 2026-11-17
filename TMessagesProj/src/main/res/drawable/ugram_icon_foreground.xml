@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ugram: the "U" with a spark, from the iOS icon (1080 x 1080 artwork) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1080">
+    <group
+        android:pivotX="540"
+        android:pivotY="540"
+        android:scaleX="0.62"
+        android:scaleY="0.62">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M300,613V303A75,75 0,0 1,450 303V613A90,90 0,0 0,630 613V303A75,75 0,0 1,780 303V613A240,240 0,0 1,300 613Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M880,100Q890,160 950,170Q890,180 880,240Q870,180 810,170Q870,160 880,100Z" />
+    </group>
+</vector>
