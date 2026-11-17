@@ -55,10 +55,23 @@ android {
         }
 
         release {
-            storeFile file("../TMessagesProj/config/release.keystore")
-            storePassword RELEASE_STORE_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
+            // Shadowgram: our own key from local.properties (never committed); Telegram's public test key otherwise
+            def shadowProps = new Properties()
+            def shadowPropsFile = rootProject.file("local.properties")
+            if (shadowPropsFile.exists()) {
+                shadowPropsFile.withInputStream { shadowProps.load(it) }
+            }
+            if (shadowProps.getProperty("SHADOWGRAM_KEYSTORE")) {
+                storeFile file(shadowProps.getProperty("SHADOWGRAM_KEYSTORE"))
+                storePassword shadowProps.getProperty("SHADOWGRAM_KEY_PASSWORD")
+                keyAlias shadowProps.getProperty("SHADOWGRAM_KEY_ALIAS")
+                keyPassword shadowProps.getProperty("SHADOWGRAM_KEY_PASSWORD")
+            } else {
+                storeFile file("../TMessagesProj/config/release.keystore")
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
         }
     }
 
