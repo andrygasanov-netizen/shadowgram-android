@@ -114,7 +114,7 @@ public class UgramSettingsActivity extends UniversalFragment {
             case PAGE_INTERFACE:
                 return t("Интерфейс", "Interface");
             default:
-                return "Ugram Tools";
+                return "Shadowgram Tools";
         }
     }
 
@@ -181,8 +181,8 @@ public class UgramSettingsActivity extends UniversalFragment {
         items.add(UItem.asCheck(ID_STORY_STEALTH, t("Скрытый просмотр историй", "Story stealth mode")).setChecked(UgramConfig.get(UgramConfig.STORY_STEALTH)));
         items.add(UItem.asCheck(ID_UNLIMITED_PINS, t("Безлимитные закрепы", "Unlimited pins")).setChecked(UgramConfig.get(UgramPins.ENABLED)));
         items.add(UItem.asCheck(ID_NO_AUTO_DOWNLOAD, t("Отключить автозагрузку медиа", "Disable media auto-download")).setChecked(UgramConfig.get(UgramConfig.NO_AUTO_DOWNLOAD)));
-        items.add(UItem.asShadow(t("Здесь собраны самые нужные функции. Всё остальное и подробные описания — в других разделах Ugram Tools.",
-                "The most useful features in one place. Everything else, with details, is in the other Ugram Tools sections.")));
+        items.add(UItem.asShadow(t("Здесь собраны самые нужные функции. Всё остальное и подробные описания — в других разделах Shadowgram Tools.",
+                "The most useful features in one place. Everything else, with details, is in the other Shadowgram Tools sections.")));
     }
 
     private void fillChats(ArrayList<UItem> items) {
@@ -191,8 +191,8 @@ public class UgramSettingsActivity extends UniversalFragment {
         items.add(UItem.asShadow(t("Закрепляйте сколько угодно чатов. Закрепы сверх лимита Telegram хранятся только на этом устройстве.",
                 "Pin as many chats as you like. Pins over the Telegram limit are kept on this device only.")));
         items.add(UItem.asButton(ID_REMINDER, t("Напоминать о непрочитанном", "Unread reminder"), reminderName(UgramReminder.hours())));
-        items.add(UItem.asShadow(t("Если вы закрыли Ugram, а непрочитанные сообщения остались, через выбранное время придёт напоминание.",
-                "If you leave Ugram with unread messages, a reminder arrives after the chosen time.")));
+        items.add(UItem.asShadow(t("Если вы закрыли Shadowgram, а непрочитанные сообщения остались, через выбранное время придёт напоминание.",
+                "If you leave Shadowgram with unread messages, a reminder arrives after the chosen time.")));
 
         items.add(UItem.asHeader(t("Удалённые сообщения", "Deleted messages")));
         items.add(UItem.asCheck(ID_SAVE_DELETED, t("Удалённые сообщения", "Deleted messages")).setChecked(UgramConfig.get(UgramConfig.SAVE_DELETED)));
@@ -200,16 +200,16 @@ public class UgramSettingsActivity extends UniversalFragment {
         items.add(UItem.asShadow(t("Сообщения, которые собеседник удалил у всех, остаются в чате на этом устройстве с меткой 🗑. Сохраняется только то, что уже было загружено в приложение. Секретные чаты не сохраняются.",
                 "Messages deleted for everyone stay in the chat on this device with a 🗑 mark. Only what was already loaded is kept. Secret chats are not kept.")));
         items.add(UItem.asCheck(ID_EDIT_HISTORY, t("История правок", "Edit history")).setChecked(UgramConfig.get(UgramEditHistory.ENABLED)));
-        items.add(UItem.asShadow(t("Зажмите отредактированное сообщение и выберите «История правок», чтобы увидеть прошлые версии. Запоминаются правки, сделанные после установки Ugram, пока приложение получало обновления.",
-                "Long-press an edited message → \"Edit history\" to see earlier versions. Edits made after installing Ugram, while it was receiving updates, are remembered.")));
+        items.add(UItem.asShadow(t("Зажмите отредактированное сообщение и выберите «История правок», чтобы увидеть прошлые версии. Запоминаются правки, сделанные после установки Shadowgram, пока приложение получало обновления.",
+                "Long-press an edited message → \"Edit history\" to see earlier versions. Edits made after installing Shadowgram, while it was receiving updates, are remembered.")));
         items.add(UItem.asCheck(ID_KEEP_SELF_DESTRUCT, t("Сохранять исчезающие медиа", "Keep self-destructing media")).setChecked(UgramConfig.get(UgramConfig.KEEP_SELF_DESTRUCT)));
         items.add(UItem.asShadow(t("Одноразовые фото, видео и голосовые приходят как обычные и помечаются 🔥: их можно открывать сколько угодно раз и сохранять. Действует на медиа, полученные после включения. Зажмите сообщение → «Пометить просмотренным», чтобы у собеседника оно исчезло.",
                 "View-once photos, videos and voice messages arrive as regular media marked 🔥: open and save them any number of times. Applies to media received after turning this on. Long-press → \"Mark as viewed\" to make it disappear for the sender.")));
 
         items.add(UItem.asHeader(t("Ваши группы и каналы", "Your groups and channels")));
         items.add(UItem.asCheck(ID_AUTO_APPROVE, t("Авто-принятие заявок", "Auto-approve join requests")).setChecked(UgramConfig.get(UgramFeatures.AUTO_APPROVE)));
-        items.add(UItem.asShadow(t("Заявки на вступление в группы и каналы, где вы администратор, одобряются сразу, как только приходят. Работает, пока Ugram запущен.",
-                "Join requests to groups and channels you administer are approved as soon as they arrive. Works while Ugram is running.")));
+        items.add(UItem.asShadow(t("Заявки на вступление в группы и каналы, где вы администратор, одобряются сразу, как только приходят. Работает, пока Shadowgram запущен.",
+                "Join requests to groups and channels you administer are approved as soon as they arrive. Works while Shadowgram is running.")));
         items.add(UItem.asButton(ID_ADMIN_FOLDERS, t("Папки админа", "Admin folders"), t("Обновить", "Update")));
         items.add(UItem.asShadow(t("Создаёт папки «Мои группы» и «Мои каналы» с чатами, где вы владелец или администратор. Нажмите ещё раз, чтобы обновить их после изменений.",
                 "Creates \"My groups\" and \"My channels\" folders with the chats you own or administer. Tap again to refresh them after changes.")));
@@ -218,8 +218,8 @@ public class UgramSettingsActivity extends UniversalFragment {
         items.add(extra(UgramExtras.SHOW_ID, t("ID профилей", "Profile IDs")));
         items.add(extra(UgramExtras.SHOW_DC, t("Показать дата-центр (DC)", "Show data center (DC)")));
         items.add(extra(UgramExtras.CONFIRM_CALLS, t("Подтверждение вызова", "Call confirmation")));
-        items.add(UItem.asShadow(t("ID показывается в профиле, нажмите, чтобы скопировать. Ugram запросит подтверждение перед совершением звонка.",
-                "The ID is shown in profiles, tap to copy. Ugram asks before placing a call.")));
+        items.add(UItem.asShadow(t("ID показывается в профиле, нажмите, чтобы скопировать. Shadowgram запросит подтверждение перед совершением звонка.",
+                "The ID is shown in profiles, tap to copy. Shadowgram asks before placing a call.")));
 
         items.add(UItem.asHeader(t("Контекстное меню", "Context menu")));
         items.add(extra(UgramExtras.MENU_SAVE_TO_CLOUD, t("Сохранить в Избранное", "Save to Saved Messages")));
@@ -401,7 +401,7 @@ public class UgramSettingsActivity extends UniversalFragment {
             case ID_POSTFIX: {
                 EditText input = new EditText(getContext());
                 input.setText(UgramConfig.getString(UgramFeatures.AUTO_POSTFIX));
-                input.setHint(t("Например: — отправлено из Ugram", "For example: sent from Ugram"));
+                input.setHint(t("Например: — отправлено из Shadowgram", "For example: sent from Shadowgram"));
                 new AlertDialog.Builder(getContext())
                         .setTitle(t("Авто-постфикс", "Auto-postfix"))
                         .setMessage(t("Текст добавится в конец каждого вашего сообщения. Оставьте пустым, чтобы отключить.", "This text is added to the end of each of your messages. Leave empty to turn off."))

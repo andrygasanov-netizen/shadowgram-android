@@ -145,7 +145,7 @@ public final class UgramExtras {
 
     // region Context menu
 
-    /** Hides the message menu items switched off in Ugram Tools and adds "Save to Saved Messages". */
+    /** Hides the message menu items switched off in Shadowgram Tools and adds "Save to Saved Messages". */
     public static void filterMenu(MessageObject message, ArrayList<CharSequence> items, ArrayList<Integer> options, ArrayList<Integer> icons) {
         for (int i = options.size() - 1; i >= 0; i--) {
             int option = options.get(i);

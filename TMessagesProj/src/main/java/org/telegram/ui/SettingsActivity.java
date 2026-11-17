@@ -795,7 +795,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
             items.add(UItem.asShadow(null));
         }
 
-        items.add(SettingCell.Factory.of(90, 0xFF4DF2A6, 0xFF05736B, R.drawable.settings_features, "Ugram Tools", null)); // Ugram
+        items.add(SettingCell.Factory.of(90, 0xFF4DF2A6, 0xFF05736B, R.drawable.settings_features, "Shadowgram Tools", null)); // Ugram
         items.add(UItem.asShadow(null));
         items.add(SettingCell.Factory.of(1, IconBackgroundColors.BLUE.top, IconBackgroundColors.BLUE.bottom, R.drawable.settings_account, getString(R.string.SettingsAccount), getString(R.string.SettingsAccountInfo)));
         items.add(SettingCell.Factory.of(2, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom, R.drawable.settings_chat, getString(R.string.SettingsChat), getString(R.string.SettingsChatInfo)));

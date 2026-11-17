@@ -1,16 +1,16 @@
-# Ugram for Android
+# Shadowgram for Android
 
-Неофициальный клиент Telegram для Android с расширенными функциями. Основан на официальном [Telegram for Android](https://github.com/DrKLO/Telegram) (версия 13.2.2). Версия для iPhone: [ugram](https://github.com/andrygasanov-netizen/ugram).
+Неофициальный клиент Telegram для Android с расширенными функциями. Основан на официальном [Telegram for Android](https://github.com/DrKLO/Telegram) (версия 13.2.2). Версия для iPhone: [shadowgram](https://github.com/andrygasanov-netizen/shadowgram).
 
-> Ugram не связан с Telegram FZ-LLC. Это независимый форк с открытым исходным кодом (GPL v2).
+> Shadowgram не связан с Telegram FZ-LLC. Это независимый форк с открытым исходным кодом (GPL v2).
 
 ## Установка
 
-Скачайте `Ugram.apk` со страницы [последнего релиза](https://github.com/andrygasanov-netizen/ugram-android/releases/latest) и установите его. Сборка только для arm64 (все современные телефоны).
+Скачайте `Shadowgram.apk` со страницы [последнего релиза](https://github.com/andrygasanov-netizen/shadowgram-android/releases/latest) и установите его. Сборка только для arm64 (все современные телефоны).
 
 ## Возможности
 
-Все настройки: **Настройки → Ugram Tools**.
+Все настройки: **Настройки → Shadowgram Tools**.
 
 - Режим призрака: без «прочитано», «печатает…», «в сети», скрытый просмотр историй.
 - Удалённые сообщения остаются в чате с меткой 🗑; история правок сообщений.

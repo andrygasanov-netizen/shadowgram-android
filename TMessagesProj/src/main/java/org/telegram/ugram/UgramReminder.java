@@ -88,14 +88,14 @@ public class UgramReminder extends BroadcastReceiver {
         }
         boolean ru = java.util.Locale.getDefault().getLanguage().startsWith("ru");
         if (Build.VERSION.SDK_INT >= 26 && manager.getNotificationChannel(CHANNEL) == null) {
-            manager.createNotificationChannel(new NotificationChannel(CHANNEL, ru ? "Напоминания Ugram" : "Ugram reminders", NotificationManager.IMPORTANCE_DEFAULT));
+            manager.createNotificationChannel(new NotificationChannel(CHANNEL, ru ? "Напоминания Shadowgram" : "Shadowgram reminders", NotificationManager.IMPORTANCE_DEFAULT));
         }
         Intent open = new Intent(context, LaunchActivity.class);
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent content = PendingIntent.getActivity(context, 2, open, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL)
                 .setSmallIcon(R.drawable.notification)
-                .setContentTitle("Ugram")
+                .setContentTitle("Shadowgram")
                 .setContentText(ru ? "Непрочитанных сообщений: " + count + ". Загляните, пока не забыли." : "You have " + count + " unread messages.")
                 .setContentIntent(content)
                 .setAutoCancel(true);
